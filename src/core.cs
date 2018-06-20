@@ -12,10 +12,16 @@ namespace mineDetonator
 
         public override void Render()
         {
-            if (GameController.Game.IngameState.Data.LocalPlayer.GetComponent<Actor>().Minions.Count >= Settings.totalMines.Value)
+            var deployedObjectsCount = GameController.Game.IngameState.Data.LocalPlayer.GetComponent<Actor>().DeployedObjectsCount;
+
+            if (Settings.debug.Value)
+                LogMessage("Total Current Deployed Objects:" + deployedObjectsCount, 1);
+
+            if (deployedObjectsCount >= Settings.totalMines.Value)
             {
                 if (Settings.debug.Value)
-                    LogMessage("Detonating Mine...", 1);
+                    LogMessage("Detonating Mine Now.", 1);
+
                 Keyboard.KeyPress(Settings.detonateKey.Value);
             }
         }
